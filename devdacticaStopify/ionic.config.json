@@ -1,0 +1,7 @@
+{
+  "name": "devdacticaStopify",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

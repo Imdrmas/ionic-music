@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ionic Music Player</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list-header>
+    <ion-label>
+      Songs
+    </ion-label>
+  </ion-list-header>
+
+  <ion-item lines="none" *ngFor="let song of songs" (click)="playSong(song.title, song.subtitle,song.img,song.path)">
+    <ion-thumbnail slot="start">
+      <img src="{{song.img}}">
+    </ion-thumbnail>
+    <ion-label>
+      <h2>{{song.title}}</h2>
+      <p>{{song.subtitle}}</p>
+    </ion-label>
+  </ion-item>
+
+</ion-content>
+
+<div class="ion-text-center" id="fullPlayer">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="minimize()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <img src="{{currentImg}}" alt="" id="currImg">
+  <h2>{{currentTitle}}</h2>
+  <p>{{currentSubtitl}}</p>
+
+  <ion-item lines="none">
+    <ion-range #range (touchmove)="touchMove()" (touchend)="touchEnd()" (touchstart)="touchStart()"
+      max="{{maxRangeValue}}" [(ngModel)]="currentRangeTime">
+      <ion-label slot="start">
+        <ion-text>
+          <b>{{currSecsText}}</b>
+        </ion-text>
+      </ion-label>
+
+      <ion-label slot="end">
+        <ion-text>
+          <b>{{durationText}}</b>
+        </ion-text>
+      </ion-label>
+    </ion-range>
+  </ion-item>
+
+  <ion-button fill="clear" mode="ios" (click)="playPrev()">
+    <ion-icon name="play-skip-back-outline" style="font-size: 30px"></ion-icon>
+  </ion-button>
+
+  <ion-button fill="clear" mode="ios" *ngIf="!isPlaying" (click)="play()">
+    <ion-icon name="play" style="font-size: 40px"></ion-icon>
+  </ion-button>
+
+  <ion-button fill="clear" mode="ios" *ngIf="isPlaying" (click)="pause()">
+    <ion-icon name="pause" style="font-size: 40px"></ion-icon>
+  </ion-button>
+
+  <ion-button fill="clear" mode="ios" (click)="playNext()">
+    <ion-icon name="play-skip-forward-outline" style="font-size: 30px"></ion-icon>
+  </ion-button>
+
+  <ion-list-header>
+    Up next
+  </ion-list-header>
+  <ion-item>
+    <ion-thumbnail slot="start">
+      <img src="{{upNextImg}}" alt="">
+    </ion-thumbnail>
+    <ion-label>
+      <h2>{{upNextTitle}}</h2>
+      <p>{{upNextSubtitle}}</p>
+    </ion-label>
+  </ion-item>
+
+</div>
+
+<ion-toolbar id="miniPlayer">
+  <ion-item>
+    <ion-thumbnail slot="start" (click)="maximize()">
+      <img src="{{currentImg}}" alt="">
+    </ion-thumbnail>
+    <ion-label (click)="maximize()">
+      <h2>{{currentTitle}}</h2>
+      <p>{{currentTitle}}</p>
+    </ion-label>
+
+    <ion-button (click)="play()" mode="ios" fill="clear" *ngIf="!isPlaying">
+      <ion-icon name="play" style="font-size: x-large;"></ion-icon>
+    </ion-button>
+
+    <ion-button (click)="pause()" mode="ios" fill="clear" *ngIf="isPlaying">
+      <ion-icon name="pause" style="font-size: x-large;"></ion-icon>
+    </ion-button>
+
+
+    <ion-button (click)="cancel()" mode="ios" fill="clear">
+      <ion-icon name="close" style="font-size: x-large;"></ion-icon>
+    </ion-button>
+
+  </ion-item>
+  <ion-progress-bar value="{{progress}}"></ion-progress-bar>
+</ion-toolbar>
+
